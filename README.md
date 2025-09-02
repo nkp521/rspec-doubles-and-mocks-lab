@@ -1,4 +1,3 @@
-
 # Lab 6: Doubles & Mocks (PaymentProcessor)
 
 In this lab, you'll use RSpec doubles, mocks, and spies to isolate a Ruby service object: the **PaymentProcessor**. You'll write specs that replace PaymentProcessor's dependencies with test doubles, verify method calls, and check that PaymentProcessor behaves correctly in isolation.
