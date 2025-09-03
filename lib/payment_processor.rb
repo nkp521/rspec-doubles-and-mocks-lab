@@ -11,22 +11,24 @@ class PaymentProcessor
   def process(amount, account)
     raise ArgumentError, 'Amount must be positive' unless amount.positive?
     raise ArgumentError, 'Account required' if account.nil?
+
     result = gateway.charge(amount, account)
-    logger&.info("Charged #{amount} to #{account}") if logger
+    logger&.info("Charged #{amount} to #{account}")
     result
-  rescue => e
-    logger&.error(e.message) if logger
+  rescue StandardError => e
+    logger&.error(e.message)
     raise
   end
 
   def refund(amount, account)
     raise ArgumentError, 'Amount must be positive' unless amount.positive?
     raise ArgumentError, 'Account required' if account.nil?
+
     result = gateway.refund(amount, account)
-    logger&.info("Refunded #{amount} to #{account}") if logger
+    logger&.info("Refunded #{amount} to #{account}")
     result
-  rescue => e
-    logger&.error(e.message) if logger
+  rescue StandardError => e
+    logger&.error(e.message)
     raise
   end
 end

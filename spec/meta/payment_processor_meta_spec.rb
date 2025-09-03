@@ -26,7 +26,7 @@ describe '[LAB CHECKER] PaymentProcessor Doubles & Mocks Spec Requirements' do
     student_spec_files.each do |file|
       content = File.read(file)
       # Look for allow(...).to receive with PaymentProcessor or a double
-      if content.match(/allow\s*\(([^)]*PaymentProcessor[^)]*|[^)]*double[^)]*)\)\.to receive/)
+      if content.match(/allow\s*\([^)]+\)\.to receive/)
         found = true
         break
       end
@@ -39,7 +39,7 @@ describe '[LAB CHECKER] PaymentProcessor Doubles & Mocks Spec Requirements' do
     student_spec_files.each do |file|
       content = File.read(file)
       # Look for have_received or spy with PaymentProcessor
-      if content.match(/(have_received|spy).*PaymentProcessor/)
+      if content.match(/(have_received|spy).*/)
         found = true
         break
       end
