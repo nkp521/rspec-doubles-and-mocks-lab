@@ -14,15 +14,24 @@ In this lab, you'll use RSpec doubles, mocks, and spies to isolate a Ruby servic
 ## Instructions
 
 1. **Write specs in `spec/student/` for the provided service object, `PaymentProcessor`.**
-   - Write at least one spec per PaymentProcessor dependency or behavior you want to test.
+        - For each external dependency or key behavior of `PaymentProcessor`, write at least one spec.
+        - **What are PaymentProcessor's dependencies?**
+            - `PaymentProcessor` depends on two objects: `gateway` (required) and `logger` (optional).
+            - `gateway` is expected to respond to `charge(amount, account)` and `refund(amount, account)`.
+            - `logger` is expected to respond to `info(message)` and `error(message)`.
+            - In your tests, you could replace both/either `gateway` and `logger` with doubles or spies.
 
-2. Use doubles to replace PaymentProcessor's external dependencies.
-   - Use `allow(...).to receive` to stub methods on your PaymentProcessor doubles.
-   - Use argument matchers like `with(...)` to ensure PaymentProcessor methods are called with the correct arguments.
+2. **Replace PaymentProcessor’s dependencies with doubles.**
+        - Use `double`, `instance_double`, or `class_double` to create test doubles for the `gateway` and `logger` dependencies.
+        - Use `allow(...).to receive(:method_name)` to stub methods on these doubles, so you can control their behavior in your tests.
+        - Use `.with(...)` to specify the exact arguments you expect these methods to be called with.
 
-3. Use mocks and spies to verify PaymentProcessor method calls and behaviors.
-   - Check that the method returns the expected result **and** that PaymentProcessor dependencies were called correctly.
-   - Use spies to check that PaymentProcessor methods are called as expected.
+3. **Verify interactions using mocks and spies.**
+     - Use `expect(...).to have_received(:method_name).with(args)` to check that your doubles were called as expected.
+     - Use `spy` if you want to record and later verify how a double was used.
+     - Make sure your specs check both:
+         - The return value of the method you’re testing.
+         - That the correct methods were called on your doubles with the correct arguments.
 
 4. Do **not** change any files in `spec/meta/`—these are lab checker specs that verify your PaymentProcessor specs. In the test output, any spec labeled with `[LAB CHECKER]` is an official lab checker (not written by you) and is there to help you know if your specs meet the requirements.
 5. Run `bin/rspec` frequently to check your progress and see which PaymentProcessor behaviors are working as expected.
